@@ -1,4 +1,4 @@
-# amazon-gamelift-largematch-sample-frogbattleroyale
+# amazon-gamelift-largematch-sample-ultrafrogroyale
 A small game built with Unity to demonstrate how to use the new Amazon GameLift large match features.
 
 # Requirements
@@ -31,7 +31,7 @@ A small game built with Unity to demonstrate how to use the new Amazon GameLift 
 1. Make sure you have the latest AWS command line installed.
 2. Upload the server build to GameLift. For example:
 <pre>
-aws gamelift upload-build --operating-system WINDOWS_2012 --build-root "C:\amazon-gamelift-largematch-sample-frogbattleroyale\UltraFrogRoyale\ServerBuild" --name "Demo Build" --build-version "build 1" --region us-east-1
+aws gamelift upload-build --operating-system WINDOWS_2012 --build-root "C:\amazon-gamelift-largematch-sample-ultrafrogroyale\UltraFrogRoyale\ServerBuild" --name "Demo Build" --build-version "build 1" --region us-east-1
 </pre>
 
 ## Step 3: Pepare GameLift
