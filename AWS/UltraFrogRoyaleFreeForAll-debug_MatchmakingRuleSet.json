@@ -1,0 +1,41 @@
+{
+    "name" : "UltraFrogRoyaleFreeForAll-debug",
+    "ruleLanguageVersion" : "1.0",
+    "playerAttributes" : [{
+        "name" : "skill",
+        "type" : "number"
+    }],
+    "algorithm" : {
+        "balancedAttribute" : "skill",
+        "strategy" : "balanced",
+        "batchingPreference": "largestPopulation"
+    },
+    "teams" : [{
+        "name": "allplayers",
+        "maxPlayers" : 80,
+        "minPlayers" : 50
+    }],
+    "rules" : [{
+        "name" : "low-latency",
+        "description" : "Sets maximum acceptable latency",
+        "type" : "latency",
+        "maxLatency" : 300
+    }],
+    "expansions" : [{
+        "target" : "teams[allplayers].minPlayers",
+        "steps" : [{
+            "waitTimeSeconds" : 10,
+            "value" : 40
+        } , {
+            "waitTimeSeconds" : 15,
+            "value" : 25
+        } , {
+            "waitTimeSeconds" : 20,
+            "value" : 10
+        } , {
+            "waitTimeSeconds" : 25,
+            "value" : 3
+        }]
+    }]
+
+}
