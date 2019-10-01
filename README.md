@@ -24,7 +24,7 @@ A small game built with Unity to demonstrate how to use the new Amazon GameLift 
 ## Step 1: Build the Unity project
 1. Open the project in Unity
 2. Build and add the Amazon GameLift Server SDK to the project following the instructions here (specifically for .Net 4.5): https://docs.aws.amazon.com/gamelift/latest/developerguide/integration-engines-unity-using.html
-3. Add the AWS Mobile SDK for Unity to the project.
+3. Add the AWS Mobile SDK for Unity to the project. https://docs.aws.amazon.com/mobile/sdkforunity/developerguide/what-is-unity-plugin.html
 4. Create a client and server build from Unity. A server build can be created by selecting "Server Build" from the Build Settings dialog.
 
 ## Step 2: Upload server build to GameLift
