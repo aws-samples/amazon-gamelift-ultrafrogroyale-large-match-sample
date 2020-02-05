@@ -1,4 +1,4 @@
-const uuid = require('uuid');
+
 const AWS = require('aws-sdk');
 const GameLift = new AWS.GameLift({region: 'us-east-1'});
 
@@ -7,6 +7,13 @@ const MaxPlayersPerSession = 200;
 const MaxDescribeAttempts = 12; // this will allow 2 minutes for matchmaking with a 10 second sleep
 
 const sleep = delay => new Promise(result => setTimeout(result, delay));
+
+function uuidv4() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
+}
 
 exports.handler = async (event) => {
     let response;
@@ -20,7 +27,7 @@ exports.handler = async (event) => {
             ConfigurationName: "UltraFrogRoyaleMatching",
             Players: [{
                 "LatencyInMs" : latencyMap,
-                "PlayerId" : uuid.v4(),
+                "PlayerId" : uuidv4(),
                 "PlayerAttributes" : {
                     "skill" : {
                         "N" : playerSkill.toString()
