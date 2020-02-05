@@ -12,10 +12,16 @@ using Amazon.CognitoIdentity;
 using Amazon;
 
 [System.Serializable]
-public class ConnectionObject
+public class InnerObject
 {
     public string IpAddress;
     public string Port;
+}
+
+[System.Serializable]
+public class ConnectionObject
+{
+    public InnerObject GameSessionConnectionInfo;
 }
 
 public class GameNetworkManager : NetworkManager
@@ -149,7 +155,7 @@ public class GameNetworkManager : NetworkManager
                         var payload = Encoding.ASCII.GetString(response.Response.Payload.ToArray()) + "\n";
                         var connectionObj = JsonUtility.FromJson<ConnectionObject>(payload);
 
-                        if (connectionObj.Port == null)
+                        if (connectionObj.GameSessionConnectionInfo.Port == null)
                         {
                             Debug.Log($"Error in Lambda assume matchmaking failed: {payload}");
                             uiController.SetStatusText("Matchmaking failed");
@@ -157,9 +163,9 @@ public class GameNetworkManager : NetworkManager
                         else
                         {
                             uiController.HideStatusText();
-                            Debug.Log($"Connecting! IP Address: {connectionObj.IpAddress} Port: {connectionObj.Port}");
-                            networkAddress = connectionObj.IpAddress;
-                            networkPort = Int32.Parse(connectionObj.Port);
+                            Debug.Log($"Connecting! IP Address: {connectionObj.GameSessionConnectionInfo.IpAddress} Port: {connectionObj.GameSessionConnectionInfo.Port}");
+                            networkAddress = connectionObj.GameSessionConnectionInfo.IpAddress;
+                            networkPort = Int32.Parse(connectionObj.GameSessionConnectionInfo.Port);
                             StartClient();
                         }
                     }
