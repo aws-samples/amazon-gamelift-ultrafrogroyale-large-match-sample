@@ -49,10 +49,11 @@ aws gamelift upload-build --operating-system WINDOWS_2012 --build-root "C:\amazo
 
 ## Step 4: Create client service
 Refer to the instructions found in step 2 of the article https://aws.amazon.com/blogs/gametech/creating-servers-for-multiplayer-mobile-games-with-amazon-gamelift/ with the following differences:
-    * Call the Lambda ConnectUltraFrogRoyaleClient
-    * Use Node.js 8, the default is 10, but it doesn't support UUID.
-    * Set the Lambda IAM role using the rules found in AWS/ConnectUltraFrogRoyaleClient_LambdaIAMRole.json (this differs from step 15-17, you can skip the action editor and just paste in the json)
-    * Use the Lambda source code found in AWS/ConnectUltraFrogRoyaleClient_Lambda.js
+   
+* Call the Lambda ConnectUltraFrogRoyaleClient
+* Use Node.js 8, the default is 10, but it doesn't support UUID.
+* Set the Lambda IAM role using the rules found in AWS/ConnectUltraFrogRoyaleClient_LambdaIAMRole.json (this differs from step 15-17, you can skip the action editor and just paste in the json)
+* Use the Lambda source code found in AWS/ConnectUltraFrogRoyaleClient_Lambda.js
 
 ## Step 5: Run the game
 At this point, you'll be able to run the game client and hit the "Start A Match" button. Note that the way the matchmaking rules are configured, you'll need to connect at least 3 clients before you get a match. You can run these clients on the same machine.
