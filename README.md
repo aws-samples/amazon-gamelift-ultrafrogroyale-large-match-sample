@@ -42,7 +42,6 @@ A small game built with Unity to demonstrate how to use the new Amazon GameLift 
 aws gamelift upload-build --operating-system WINDOWS_2012 --build-root "C:\amazon-gamelift-largematch-sample-ultrafrogroyale\UltraFrogRoyale\ServerBuild" --name "UltraFrogRoyale" --build-version "build 1" --region us-east-1
 ```
 
-
 ### Step 3: Prepare GameLift
 
 1. Create a new fleet
