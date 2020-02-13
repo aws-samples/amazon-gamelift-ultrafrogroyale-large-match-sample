@@ -131,7 +131,7 @@ public class GameNetworkManager : NetworkManager
         AmazonLambdaClient client = new AmazonLambdaClient(credentials, RegionEndpoint.USEast1);
         InvokeRequest request = new InvokeRequest
         {
-            FunctionName = "ConnectUltraFrogBattleClient",
+            FunctionName = "ConnectUltraFrogRoyaleClient",
             InvocationType = InvocationType.RequestResponse,
             Payload = matchParams
         };
