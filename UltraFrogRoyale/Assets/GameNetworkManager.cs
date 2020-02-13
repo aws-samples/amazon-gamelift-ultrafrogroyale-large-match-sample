@@ -30,6 +30,8 @@ public class GameNetworkManager : NetworkManager
     public UIController uiController;
 
     private bool isHeadlessServer = false;
+    private bool isGameliftServer = false;
+    private System.Timers.Timer timer = new System.Timers.Timer(120000);
 
     private static int LISTEN_PORT = 7777;
 
@@ -50,6 +52,7 @@ public class GameNetworkManager : NetworkManager
         // detect headless server mode
         if (SystemInfo.graphicsDeviceType == UnityEngine.Rendering.GraphicsDeviceType.Null)
         {
+            Debug.Log("** SERVER MODE **");
             isHeadlessServer = true;
             SetupServerAndGamelift();
         }
@@ -68,7 +71,6 @@ public class GameNetworkManager : NetworkManager
         if (isHeadlessServer)
         {
             TerminateSession();
-            GameLiftServerAPI.Destroy();
         }
     }
 
@@ -85,9 +87,12 @@ public class GameNetworkManager : NetworkManager
                 gameManager.RemovePlayer(playerController);
             }
         }
-        // if the number of players drops to 0, notify GameLift to terminate the instance
-        // NOTE: This may not be desirable if you want to give more time to poplate a running
-        // server instance.
+        QuitIfNoPlayers();
+    }
+
+    private void QuitIfNoPlayers()
+    {
+        // if no players are playing the game now terminate the server process
         if (numPlayers <= 0 && isHeadlessServer)
         {
             TerminateSession();
@@ -99,8 +104,13 @@ public class GameNetworkManager : NetworkManager
     public void TerminateSession()
     {
         Debug.Log("** TerminateSession Requested **");
-        GameLiftServerAPI.TerminateGameSession();
-        GameLiftServerAPI.ProcessEnding();
+        if (isGameliftServer)
+        {
+            GameLiftServerAPI.TerminateGameSession();
+            GameLiftServerAPI.ProcessEnding();
+        }
+        Debug.Log("** Process Exit **");
+        Application.Quit();
     }
 
     private void SetupClient()
@@ -178,6 +188,11 @@ public class GameNetworkManager : NetworkManager
             });
     }
 
+    private void CheckPlayersJoined(System.Object source, System.Timers.ElapsedEventArgs e)
+    {
+        QuitIfNoPlayers();
+    }
+
     private void SetupServerAndGamelift()
     {
         // start the unet server
@@ -190,11 +205,16 @@ public class GameNetworkManager : NetworkManager
         var initSDKOutcome = GameLiftServerAPI.InitSDK();
         if(initSDKOutcome.Success)
         {
+            isGameliftServer = true;
             var processParams = new ProcessParameters(
                 (gameSession) =>
                 {
                     // onStartGameSession callback
                     GameLiftServerAPI.ActivateGameSession();
+                    // quit if no player joined within two minutes
+                    timer.Elapsed += this.CheckPlayersJoined;
+                    timer.AutoReset = false;
+                    timer.Start();
                 },
                 (updateGameSession) =>
                 {
@@ -203,7 +223,7 @@ public class GameNetworkManager : NetworkManager
                 () =>
                 {
                     // onProcessTerminate callback
-                    GameLiftServerAPI.ProcessEnding();
+                    TerminateSession();
                 },
                 () =>
                 {
