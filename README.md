@@ -2,6 +2,10 @@
 
 A small game built with Unity to demonstrate how to use the new Amazon GameLift large match features.
 
+## Disclaimer
+
+This project references AWS Mobile SDK for Unity which has been [deprecated](https://docs.aws.amazon.com/mobile/sdkforunity/developerguide/what-is-unity-plugin.html) in favor of [AWS SDK for .NET](https://docs.aws.amazon.com/sdk-for-net/latest/developer-guide/quick-start.html). Until it is updated, please refer to the [aws-gamelift-and-serverless-backend-sample repository](https://github.com/aws-samples/aws-gamelift-and-serverless-backend-sample) to find instructions on how to setup and build AWS SDK for .NET.
+
 ## Requirements
 
 - An AWS account: <https://aws.amazon.com/getting-started/>
